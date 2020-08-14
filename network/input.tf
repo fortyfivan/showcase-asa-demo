@@ -1,16 +1,16 @@
 variable "name" {
-  type        = "string"
+  type        = string
   description = "Name of the Network Stack"
 }
 
 variable "environment" {
-  type = "string"
+  type = string
 }
 
 variable "availability_zones" {
-  type = "list"
+  type = list
 }
 
 variable "public_cidrs" {
-  type = "list"
+  type = list
 }

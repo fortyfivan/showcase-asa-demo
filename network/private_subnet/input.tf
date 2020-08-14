@@ -1,23 +1,23 @@
 variable "name" {
-  type = "string"
+  type = string
 }
 
 variable "environment" {
-  type = "string"
+  type = string
 }
 
 variable "vpc_id" {
-  type = "string"
+  type = "string
 }
 
 variable "cidrs" {
-  type = "list"
+  type = list
 }
 
 variable "availability_zones" {
-  type = "list"
+  type = list
 }
 
 variable "nat_gateway_ids" {
-  type = "list"
+  type = list
 }

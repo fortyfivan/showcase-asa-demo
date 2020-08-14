@@ -4,18 +4,18 @@ resource "aws_vpc" "main" {
 
   tags = {
     Name        = "${var.name}-vpc"
-    Environment = "${var.environment}"
+    Environment = var.environment
     terraform   = true
     module      = "vpc"
   }
 }
 
 resource "aws_internet_gateway" "main" {
-  vpc_id = "${aws_vpc.main.id}"
+  vpc_id = aws_vpc.main.id
 
   tags = {
     Name        = "${var.name}-gateway"
-    Environment = "${var.environment}"
+    Environment = var.environment
     terraform   = true
     module      = "vpc"
   }
@@ -33,13 +33,13 @@ resource "aws_vpc_dhcp_options" "main" {
 
   tags = {
     Name        = "${var.name}-dhcp-options"
-    Environment = "${var.environment}"
+    Environment = var.environment
     terraform   = true
     module      = "vpc"
   }
 }
 
 resource "aws_vpc_dhcp_options_association" "main" {
-  vpc_id          = "${aws_vpc.main.id}"
-  dhcp_options_id = "${aws_vpc_dhcp_options.main.id}"
+  vpc_id          = aws_vpc.main.id
+  dhcp_options_id = aws_vpc_dhcp_options.main.id
 }

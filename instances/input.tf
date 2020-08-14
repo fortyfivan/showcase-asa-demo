@@ -1,13 +1,13 @@
 variable name {
-  type = "string"
+  type = string
 }
 
 variable environment {
-  type = "string"
+  type = string
 }
 
 variable vpc_id {
-  type = "string"
+  type = string
 }
 
 variable subnet {
@@ -15,9 +15,9 @@ variable subnet {
 }
 
 variable sftd_version {
-  type = "string"
+  type = string
 }
 
 variable enrollment_token {
-  type = "string"
+  type = string
 }

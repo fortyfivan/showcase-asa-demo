@@ -3,13 +3,13 @@ variable "name" {
 }
 
 variable "environment" {
-  type = "string"
+  type = string
 }
 
 variable "availability_zones" {
-  type = "list"
+  type = list
 }
 
 variable "subnet_ids" {
-  type = "list"
+  type = list
 }

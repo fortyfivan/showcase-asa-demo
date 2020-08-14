@@ -1,9 +1,9 @@
 variable "project" {
-  type        = "string"
+  type        = string
   description = "Name of the ASA Project"
 }
 
 variable "group" {
-  type        = "string"
+  type        = string
   description = "Name of the ASA Group"
 }
