@@ -1,3 +1,8 @@
+variable "tagname" {
+  type    = string
+  default = "linux"
+}
+
 variable name {
   type = string
 }
@@ -8,6 +13,10 @@ variable environment {
 
 variable vpc_id {
   type = string
+}
+
+variable instances {
+  type = number
 }
 
 variable subnet {

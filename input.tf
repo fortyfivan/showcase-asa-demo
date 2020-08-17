@@ -40,6 +40,11 @@ variable "sftd_version" {
   default = "1.44.6"
 }
 
+variable "instances" {
+  type = number
+  default = 3
+}
+
 variable "oktaasa_project" {
   description = "Name of the ASA Project"
   default     = "pied-pepper-burst-test"

@@ -15,22 +15,42 @@ data "aws_ami" "ubuntu1604" {
   owners = ["099720109477"] # Canonical
 }
 
-// Ubuntu node
-module "ubuntu1604" {
-  source      = "./linux"
-  tagname     = "pied-pepper-target"
-  ami         = data.aws_ami.ubuntu1604.id
-  environment = var.environment
-  userdata    = data.template_file.sftd-ubuntu-userdata.rendered
-  vpc_id      = var.vpc_id
+// Bastion Host
+resource "aws_instance" "bastion" {
+  count                  = 1
+  ami                    = data.aws_ami.ubuntu1604.id
+  instance_type          = "t2.micro"
+  vpc_security_group_ids = ["${aws_security_group.default.id}"]
+  source_dest_check      = false
+  user_data              = templatefile("${path.module}/userdata-scripts/ubuntu-bastion-userdata-sftd.sh", { sftd_version = var.sftd_version, enrollment_token = var.enrollment_token, instance = count.index})
+
+  tags = {
+    Name        = "${var.tagname}-${count.index}"
+    Environment = var.environment
+    terraform   = true
+  }
+
+  lifecycle {
+    ignore_changes = [user_data]
+  }
 }
 
-// Ubuntu node
-module "ubuntu1604-bastion" {
-  source      = "./linux"
-  tagname     = "pied-pepper-bastion"
-  ami         = data.aws_ami.ubuntu1604.id
-  environment = var.environment
-  userdata    = data.template_file.sftd-ubuntu-bastion-userdata.rendered
-  vpc_id      = var.vpc_id
+// Target Instances
+resource "aws_instance" "target" {
+  count                  = var.instances
+  ami                    = data.aws_ami.ubuntu1604.id
+  instance_type          = "t2.micro"
+  vpc_security_group_ids = ["${aws_security_group.default.id}"]
+  source_dest_check      = false
+  user_data              = templatefile("${path.module}/userdata-scripts/ubuntu-userdata-sftd.sh", { sftd_version = var.sftd_version, enrollment_token = var.enrollment_token, instance = count.index})
+
+  tags = {
+    Name        = "${var.tagname}-${count.index}"
+    Environment = var.environment
+    terraform   = true
+  }
+
+  lifecycle {
+    ignore_changes = [user_data]
+  }
 }

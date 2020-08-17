@@ -17,6 +17,7 @@ module "instances" {
   vpc_id           = module.net.vpc_id
   name             = var.name
   environment      = var.environment
+  instances        = var.instances
   subnet           = module.net.public_subnet_ids[0]
   sftd_version     = var.sftd_version
   enrollment_token = module.okta.enrollment_token
