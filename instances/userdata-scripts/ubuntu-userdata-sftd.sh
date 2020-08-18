@@ -13,8 +13,8 @@ sudo mkdir -p /etc/sft/
 sftcfg=$(cat <<EOF
 ---
 # CanonicalName: Specifies the name clients should use/see when connecting to this host.
-CanonicalName:            "pied-pepper-target-${instance}"
-Bastion:                  "pied-pepper-bastion"
+CanonicalName:            "showcase-target-${instance}"
+Bastion:                  "showcase-bastion"
 EOF
 )
 

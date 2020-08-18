@@ -19,8 +19,12 @@ variable instances {
   type = number
 }
 
-variable subnet {
-  type = list(any)
+variable public_subnet {
+  type = string
+}
+
+variable private_subnet {
+  type = string
 }
 
 variable sftd_version {
