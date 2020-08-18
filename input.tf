@@ -27,12 +27,12 @@ provider "oktaasa" {
 
 variable "name" {
   type    = string
-  default = "pied-pepper-burst"
+  default = "showcase"
 }
 
 variable "environment" {
   type    = string
-  default = "pied-pepper"
+  default = "showcase-demo"
 }
 
 variable "sftd_version" {
@@ -47,11 +47,16 @@ variable "instances" {
 
 variable "oktaasa_project" {
   description = "Name of the ASA Project"
-  default     = "pied-pepper-burst-test"
+  default     = "showcase-project"
 }
 
 variable "oktaasa_group" {
   description = "Name of the ASA Group"
-  default     = "PP_DevOps"
+  default     = "PP_InfoSec"
+}
+
+variable "test_groups" {
+  type    = list(string)
+  default = ["PP_InfoSec", "PP_DevOps"]
 }
 

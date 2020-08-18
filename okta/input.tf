@@ -7,3 +7,8 @@ variable "group" {
   type        = string
   description = "Name of the ASA Group"
 }
+
+variable "groups" {
+  type        = list(string)
+  description = "Name of the ASA Groups"
+}
