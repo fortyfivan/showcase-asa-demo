@@ -1,8 +1,7 @@
 module "okta" {
   source       = "./okta"
   project      = var.oktaasa_project
-  group        = var.oktaasa_group
-  groups       = var.test_groups
+  groups       = var.oktaasa_groups
 }
 
 module "net" {

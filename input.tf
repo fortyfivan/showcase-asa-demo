@@ -50,12 +50,7 @@ variable "oktaasa_project" {
   default     = "showcase-project"
 }
 
-variable "oktaasa_group" {
-  description = "Name of the ASA Group"
-  default     = "PP_InfoSec"
-}
-
-variable "test_groups" {
+variable "oktaasa_groups" {
   type    = list(string)
   default = ["PP_InfoSec", "PP_DevOps"]
 }
