@@ -1,8 +1,3 @@
-variable "tagname" {
-  type    = string
-  default = "linux"
-}
-
 variable name {
   type = string
 }

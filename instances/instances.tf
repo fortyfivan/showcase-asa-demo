@@ -16,14 +16,25 @@ data "aws_ami" "ubuntu1604" {
 }
 
 // Security Group
-module "security_group" {
-  source = "terraform-aws-modules/security-group/aws//modules/ssh"
-
-  name        = "ssh"
-  description = "Security group for SSH access"
-  vpc_id      = var.vpc_id
-
-  ingress_cidr_blocks = ["0.0.0.0/0"]
+resource "aws_security_group" "security_group" {
+  name = "sg_ssh"
+  vpc_id = var.vpc_id
+  ingress {
+      from_port   = 22
+      to_port     = 22
+      protocol    = "tcp"
+      cidr_blocks = ["0.0.0.0/0"]
+  }
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  tags = {
+    Name        = var.name
+    Environment = var.environment
+  }
 }
 
 // Bastion Host
@@ -31,13 +42,13 @@ resource "aws_instance" "bastion" {
   count                  = 1
   ami                    = data.aws_ami.ubuntu1604.id
   instance_type          = "t2.micro"
-  vpc_security_group_ids = ["${module.security_group.this_security_group_id}"]
+  vpc_security_group_ids = [aws_security_group.security_group.id]
   subnet_id              = var.public_subnet
   source_dest_check      = false
   user_data              = templatefile("${path.module}/userdata-scripts/ubuntu-bastion-userdata-sftd.sh", { sftd_version = var.sftd_version, enrollment_token = var.enrollment_token })
 
   tags = {
-    Name        = "${var.tagname}"
+    Name        = var.name
     Environment = var.environment
     terraform   = true
   }
@@ -52,13 +63,13 @@ resource "aws_instance" "target" {
   count                  = var.instances
   ami                    = data.aws_ami.ubuntu1604.id
   instance_type          = "t2.micro"
-  vpc_security_group_ids = ["${module.security_group.this_security_group_id}"]
+  vpc_security_group_ids = [aws_security_group.security_group.id]
   subnet_id              = var.private_subnet
   source_dest_check      = false
   user_data              = templatefile("${path.module}/userdata-scripts/ubuntu-userdata-sftd.sh", { sftd_version = var.sftd_version, enrollment_token = var.enrollment_token, instance = count.index})
 
   tags = {
-    Name        = "${var.tagname}-${count.index}"
+    Name        = "${var.name}-${count.index}"
     Environment = var.environment
     terraform   = true
   }
